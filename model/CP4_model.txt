@@ -24,15 +24,16 @@ model
   
   ##Priors
  alpha[1] ~ dnorm(0.0,0.01)
- alpha[2] ~ dnorm(0.0,0.01)
- alpha[3] ~ dnorm(0.0,0.01)
- alpha[4] ~ dnorm(0.0,0.01)
+ alpha[2]<-(beta[2]/(cp[2]-cp[1]))+alpha[1]
+ alpha[3]<-(beta[3]/(cp[3]-cp[2]))+alpha[2]
+ alpha[4]<-(beta[4]/(cp[4]-cp[3]))+alpha[3]
+
 
 
  beta[1]~dnorm(0.0,0.01)
- beta[2]<-(alpha[2]-alpha[1])/(cp[2]-cp[1])
- beta[3]<-(alpha[3]-alpha[2])/(cp[3]-cp[2])
- beta[4]<-(alpha[4]-alpha[3])/(cp[4]-cp[3])
+ beta[2]~dnorm(0.0,0.01)
+ beta[3]~dnorm(0.0,0.01)
+ beta[4]~dnorm(0.0,0.01)
  beta[5]~dnorm(0.0,0.01)
    
  

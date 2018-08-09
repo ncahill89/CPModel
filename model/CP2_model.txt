@@ -22,18 +22,19 @@ model
   
   ##Priors
  alpha[1] ~ dnorm(0.0,0.01)
- alpha[2] ~ dnorm(0.0,0.01)
+ alpha[2]<-(beta[2]/(cp[2]-cp[1]))+alpha[1]
 
  beta[1]~dnorm(0.0,0.01)
- beta[2]<-(alpha[2]-alpha[1])/(cp[2]-cp[1])
+ beta[2]~dnorm(0.0,0.01)
  beta[3]~dnorm(0.0,0.01)
    
  
-  tau_err <- pow(sigma_err,-2)
-  sigma_err ~ dunif(0.01,3)
+ tau_err <- pow(sigma_err,-2)
+ sigma_err ~ dunif(0,3)
 
  cp.temp[1] ~ dunif(year_min,year_max)
  cp.temp[2] ~ dunif(year_min,year_max)
+ 
  cp[1:2]<-sort(cp.temp)
       
 }##End model

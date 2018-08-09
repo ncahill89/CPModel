@@ -9,14 +9,14 @@ get_diagnostics<-function(dat,
   {
     load(paste0("output/jags_mod",1,".Rdata"))
     mcmc.array<-mod$BUGSoutput$sims.array
-    pars.check<-c("beta[1]","beta[2]","cp")
+    pars.check<-c("beta[1]","beta[2]","cp","sigma_err")
   }
   
   if(grepl("2",model))
   {
     load(paste0("output/jags_mod",2,".Rdata"))
     mcmc.array<-mod$BUGSoutput$sims.array
-    pars.check<-c("beta[1]","beta[2]","beta[3]","cp[1]","cp[2]")
+    pars.check<-c("beta[1]","beta[2]","beta[3]","alpha[1]","alpha[2]","cp[1]","cp[2]","sigma_err")
   }
   
   if(grepl("3",model))

@@ -16,13 +16,13 @@ Rfiles <- Rfiles[grepl(".R", Rfiles)]
 sapply(paste0("R/", Rfiles), source)
 
 ##Read in data
-dat<-read_csv("data/cowdata.csv")
+dat<-read_csv("data/Valley Head.csv")
 
 ##Plot the data
 plot_data(dat)
 
 ##choose a model file
-model.file="model/CP4_model.txt"
+model.file="model/CP2_model.txt"
 
 ##Run the model
 RunCPModel(dat=dat,
@@ -33,7 +33,7 @@ get_diagnostics(dat,
                 model=model.file)
 
 ##If convergence is not ok check the traceplots for flagged parameters e.g.,
-PlotTrace("beta[1]",
+PlotTrace("cp[2]",
           model=model.file)
 
 ##If diagnostics look ok, get estimates and plot the results 

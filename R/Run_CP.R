@@ -40,37 +40,37 @@ RunCPModel<-function(model="model/CPmodel.txt",
   if(grepl("1",model))
   {
     cpmodel<-1
-    myinitial<-function(){list("alpha"=rnorm(1,0,3),
+    myinitial<-function(){list("alpha"=runif(1,0,10),
                                "beta"=c(rnorm(2,0,3)),
-                               "cp"=runif(1,min(year.t/1000),max(year.t/1000)),
-                               "sigma_err"=runif(1,0,3) )}
+                               "cp"=runif(1,min(year.t/1000)+0.01,max(year.t/1000)-0.01),
+                               "sigma_err"=runif(1,0,1) )}
   }
   
   if(grepl("2",model))
   {
     cpmodel<-2
-    myinitial<-function(){list("alpha"=rnorm(2,0,3),
-                               "beta"=c(rnorm(1,0,3),NA,rnorm(1,0,3)),
-                               "cp.temp"=runif(2,min(year.t/1000),max(year.t/1000)),
-                               "sigma_err"=runif(1,0,3) )}
+    myinitial<-function(){list("alpha"=c(rnorm(1,0,3),NA),
+                               "beta"=c(rnorm(3,0,3)),
+                               "cp.temp"=runif(2,min(year.t/1000)+0.01,max(year.t/1000)-0.01),
+                               "sigma_err"=runif(1,0,1) )}
   }
   
   if(grepl("3",model))
   {
     cpmodel<-3
-    myinitial<-function(){list("alpha"=rnorm(3,0,3),
-                               "beta"=c(rnorm(1,0,3),NA,NA,rnorm(1,0,3)),
-                               "cp.temp"=runif(3,min(year.t/1000),max(year.t/1000)),
-                               "sigma_err"=runif(1,0,3) )}
+    myinitial<-function(){list("alpha"=c(rnorm(1,0,3),NA,NA),
+                               "beta"=c(rnorm(4,0,3)),
+                               "cp.temp"=runif(3,min(year.t/1000)+0.01,max(year.t/1000)-0.01),
+                               "sigma_err"=runif(1,0,1) )}
   }
   
   if(grepl("4",model))
   {
     cpmodel<-4
-    myinitial<-function(){list("alpha"=rnorm(4,0,3),
-                               "beta"=c(rnorm(1,0,3),NA,NA,NA,rnorm(1,0,3)),
-                               "cp.temp"=runif(4,min(year.t/1000),max(year.t/1000)),
-                               "sigma_err"=runif(1,0,3) )}
+    myinitial<-function(){list("alpha"=c(rnorm(1,0,3),NA,NA,NA),
+                               "beta"=c(rnorm(5,0,3)),
+                               "cp.temp"=runif(4,min(year.t/1000)+0.01,max(year.t/1000)-0.01),
+                               "sigma_err"=runif(1,0,1) )}
   }
   
   ########Run the model########
