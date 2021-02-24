@@ -1,22 +1,13 @@
-# Set working directory 
-setwd("~/Desktop/CPModel")
-
 # Load packages
-library(dplyr)
-library(magrittr)
-library(tidyr)
-library(readr)
-library(ggplot2)
+library(tidyverse)
 library(rjags)
 library(R2jags)
 
-# Call functions
-Rfiles <- list.files(file.path(getwd(), "R"))
-Rfiles <- Rfiles[grepl(".R", Rfiles)]
-sapply(paste0("R/", Rfiles), source)
+# load functions
+devtools::load_all()
 
 ##Read in data
-dat<-read_csv("data/Valley Head.csv")
+dat<-read_csv("data/crudata.csv")
 
 ##Plot the data
 plot_data(dat)
@@ -36,7 +27,7 @@ get_diagnostics(dat,
 PlotTrace("cp[2]",
           model=model.file)
 
-##If diagnostics look ok, get estimates and plot the results 
+##If diagnostics look ok, get estimates and plot the results
 # get_ests will return mean estimate, sd and 95% uncertainty interval (l95 = 95% lower bound, u95 = 95% upper bound)
 get_ests(dat,model=model.file)
 # Plot results, choose an axis label and a title
