@@ -1,6 +1,6 @@
 ## Introduction
 This repo contains code for implementing a Bayesian change-point linear regression models for time series data. 
-The models are relatively simple and it can be really useful for answering questions related to changes in trends over time. Example datasets of global temperature are provided in the data folder. 
+The models are relatively simple and it can be really useful for answering questions related to changes in trends over time. Example datasets of global temperature are provided in the data folder. The CPmain.R file calls functions to run the model, run diagnostics and produce results. 
 
 
  
