@@ -2,13 +2,14 @@ plot_data<-function(dat,
                     title='')
 {
   dir.create("fig", showWarnings = FALSE)
-  
+
   p<-ggplot(dat, aes(y=y,x=year))+
     geom_point()+
     ylab('Y')+
     ggtitle(title)
   ggsave(p, file = 'fig/dat_plot.pdf', width = 10, height = 6)
   cat("Plot of raw data saved to figure folder \n")
+  return(p)
 }
 
 plot_res<-function(dat,
@@ -17,39 +18,39 @@ plot_res<-function(dat,
                    title="")
 {
 
-  # load the MCMC output  
+  # load the MCMC output
   if(grepl("1",model))
   {
-    
+
     load(paste0("output/jags_mod",1,".Rdata"))
     mcmc.array<-mod$BUGSoutput$sims.array
     saveas<-"CP1_plot.pdf"
   }
-  
+
   if(grepl("2",model))
   {
     load(paste0("output/jags_mod",2,".Rdata"))
     mcmc.array<-mod$BUGSoutput$sims.array
     saveas<-"CP2_plot.pdf"
   }
-  
+
   if(grepl("3",model))
   {
     load(paste0("output/jags_mod",3,".Rdata"))
     mcmc.array<-mod$BUGSoutput$sims.array
     saveas<-"CP3_plot.pdf"
   }
-  
+
   if(grepl("4",model))
   {
     load(paste0("output/jags_mod",4,".Rdata"))
     mcmc.array<-mod$BUGSoutput$sims.array
     saveas<-"CP4_plot.pdf"
   }
-  
+
 # Load jags data
-load("output/jags_data.Rdata") 
-# Get posterior samples 
+load("output/jags_data.Rdata")
+# Get posterior samples
 sstar_s<-mod$BUGSoutput$sims.list$s_star
 # Get estimates and uncertainty bounds
 sstar_mean<-apply(sstar_s,2,mean)
@@ -72,4 +73,5 @@ ggsave(res, file = paste0("fig/",saveas), width = 10, height = 6)
 
 cat("Plot of estimates saved to figure folder \n")
 
+return(res)
 }

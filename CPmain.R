@@ -13,7 +13,7 @@ dat<-read_csv("data/crudata.csv")
 plot_data(dat)
 
 ##choose a model file
-model.file="model/CP2_model.txt"
+model.file="model/CP3_model.txt"
 
 ##Run the model
 RunCPModel(dat=dat,
@@ -24,17 +24,18 @@ get_diagnostics(dat,
                 model=model.file)
 
 ##If convergence is not ok check the traceplots for flagged parameters e.g.,
-PlotTrace("cp[2]",
+PlotTrace("beta[1]",
           model=model.file)
 
 ##If diagnostics look ok, get estimates and plot the results
 # get_ests will return mean estimate, sd and 95% uncertainty interval (l95 = 95% lower bound, u95 = 95% upper bound)
 get_ests(dat,model=model.file)
+
 # Plot results, choose an axis label and a title
 plot_res(dat,
          model=model.file,
          yaxis.lab="Temperature anomoly",
-         title="HadCRUT")
+         title="")
 
 
 

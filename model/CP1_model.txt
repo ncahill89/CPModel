@@ -1,32 +1,31 @@
 model
 {
 
-  
+
 ####CP Regression model
   for(t in 1:n_years)
   {
   s_star[t]<-alpha + beta[C[t]]*(year.t[t]-cp)
   C[t] <- 1+step(year.t[t]-cp)
   }
-     
-  ###Data Loop 
+
+  ###Data Loop
   for(j in 1:n_obs)
   {
-  y.j[j]~dnorm(s_star[matchyears[j]],tau_err)
+  y.j[j]~dnorm(s_star[matchyears[j]],sigma_err^-2)
   }
 
-  
+
   ##Priors
-  beta[1]~ dnorm(0, 0.01) 
-  beta[2]~ dnorm(0, 0.01) 
+  alpha[1] ~ dnorm(0.0,0.01)
 
-  alpha ~ dnorm(0, 0.01) 
-   
- 
-  tau_err <- pow(sigma_err,-2)
-  sigma_err ~ dunif(0.01,3)
+  beta[1]~dnorm(0.0,0.01)
+  beta[2]~dnorm(0.0,0.01)
 
-  cp~dunif(year_min,year_max)
-    
-      
+  sigma_err ~ dt(0,4^-2,1)T(0,)
+
+  cp ~ dunif(year_min,year_max)
+
+
+
 }##End model
