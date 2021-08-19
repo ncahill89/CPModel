@@ -6,13 +6,13 @@ for (parname in pars.check){
   p <- p+1 # index
   mcmc.array.temp <- mcmc.array[,,parname]
   mcmc <- mcmc.list()
-  
+
 for (chain in 1:dim(mcmc.array.temp)[2]){
   mcmc[[chain]] <- as.mcmc(mcmc.array.temp[,chain])
 }
   r<- gelman.diag(mcmc, autoburnin = FALSE, transform = F)$psrf
   R[p] <-r[,"Point est."]
-  
+
 }
 
 
@@ -41,13 +41,13 @@ eff_size<-function(mcmc.array,
     p <- p+1 # index
     mcmc.array.temp <- mcmc.array[,,parname]
     mcmc <- mcmc.list()
-    
+
     for (chain in 1:dim(mcmc.array.temp)[2]){
       mcmc[[chain]] <- as.mcmc(mcmc.array.temp[,chain])
     }
     es<- effectiveSize(mcmc)
     ESS[p] <-es/(dim(mcmc.array)[1]*dim(mcmc.array)[2])
-    
+
   }
   names(ESS) <- pars.check
   if (length(ESS[ESS<0.1])>0){
@@ -57,7 +57,7 @@ eff_size<-function(mcmc.array,
   else
     cat(paste0("No apparent autocorrelation issues for checked parameters. \n"))
 
-  
+
 }
 
 mcse<-function(mcmc.array,
@@ -68,13 +68,13 @@ mcse<-function(mcmc.array,
     p <- p+1 # index
     mcmc.array.temp <- mcmc.array[,,parname]
     mcmc <- mcmc.list()
-    
+
     for (chain in 1:dim(mcmc.array.temp)[2]){
       mcmc[[chain]] <- as.mcmc(mcmc.array.temp[,chain])
     }
     es<- effectiveSize(mcmc)
     MCSE[p] <-(sd(mcmc.array.temp)/es)/sd(mcmc.array.temp)
-    
+
   }
   names(MCSE) <- pars.check
   if (length(MCSE[MCSE>0.1])>0){
@@ -89,34 +89,34 @@ mcse<-function(mcmc.array,
 PlotTrace <- function(#Traceplot for one parameter
   ### Trace plot for one parameter and add loess smoother for each chain
   parname,
-  model="model/CP_model.txt",
+  n_cp = 1,
   n.chains= NULL, n.sim= NULL, main = NULL){
-  
-  # load the MCMC output  
-  if(grepl("1",model))
+
+  # load the MCMC output
+  if(n_cp == 1)
   {
     load(paste0("output/jags_mod",1,".Rdata"))
     mcmc.array<-mod$BUGSoutput$sims.array
   }
-  
-  if(grepl("2",model))
+
+  if(n_cp == 2)
   {
     load(paste0("output/jags_mod",2,".Rdata"))
     mcmc.array<-mod$BUGSoutput$sims.array
   }
-  
-  if(grepl("3",model))
+
+  if(n_cp == 3)
   {
     load(paste0("output/jags_mod",3,".Rdata"))
     mcmc.array<-mod$BUGSoutput$sims.array
   }
-  
-  if(grepl("4",model))
+
+  if(n_cp == 4)
   {
     load(paste0("output/jags_mod",4,".Rdata"))
     mcmc.array<-mod$BUGSoutput$sims.array
   }
-  
+
   if (is.null(main)) main <- parname
   if (is.null(n.sim)) n.sim <- dim(mcmc.array)[1]
   if (is.null(n.chains)) n.chains <- dim(mcmc.array)[2]
