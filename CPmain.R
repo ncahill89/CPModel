@@ -3,37 +3,49 @@ library(tidyverse)
 library(rjags)
 library(R2jags)
 
-# load functions
+## load functions
 devtools::load_all()
 
-##Read in data
-dat<-read_csv("data/crudata.csv")
+## Check crudata and cowdata as examples of datasets with no measurement errors
+## Check NJ_CC or NC_CC as examples of datasets with vertical and horizontal measurement errors
 
-##Plot the data
-plot_data(dat)
+## Read in data
+dat<-read_csv("data/NJ_CC.csv")
 
-##choose a model file
-model.file="model/CP3_model.txt"
+## uncomment to de-trend the record (here using a GIA rate of 1.4 mm/yr)
+#dat <- dat %>% mutate(y = (2010-year)*0.0014+y)
 
-##Run the model
+## indicate if you want to include horizontal (x) and vertical (y) errors: TRUE = yes, FALSE = no
+include_errors = TRUE
+
+## Plot the data with 1-sigma uncertainty
+plot_data(dat,
+          include_errors = include_errors)
+
+## specify the number of change points (1,2,3 or 4)
+num_change_points <- 2
+
+## Run the model
 RunCPModel(dat=dat,
-           model=model.file)
+           n_cp = num_change_points,
+           include_errors = include_errors)
 
-##Check convergence, if convergence is ok then a summary of the parameters will print
+## Check convergence, if convergence is ok then a summary of the parameters will print
 get_diagnostics(dat,
-                model=model.file)
+                n_cp = num_change_points)
 
-##If convergence is not ok check the traceplots for flagged parameters e.g.,
-PlotTrace("beta[1]",
-          model=model.file)
+## If convergence is not ok check the traceplots for flagged parameters e.g.,
+PlotTrace("cp[1]",
+          n_cp = num_change_points)
 
-##If diagnostics look ok, get estimates and plot the results
+## If diagnostics look ok, get estimates and plot the results
 # get_ests will return mean estimate, sd and 95% uncertainty interval (l95 = 95% lower bound, u95 = 95% upper bound)
-get_ests(dat,model=model.file)
+get_ests(dat,
+         n_cp = num_change_points)
 
-# Plot results, choose an axis label and a title
+## Plot results, choose an axis label and a title
 plot_res(dat,
-         model=model.file,
+         n_cp = num_change_points,
          yaxis.lab="Temperature anomoly",
          title="")
 
