@@ -13,7 +13,7 @@ devtools::load_all()
 dat<-read_csv("data/NJ_CC.csv")
 
 ## uncomment to de-trend the record (here using a GIA rate of 1.4 mm/yr)
-dat <- dat %>% mutate(y = (2010-year)*0.0014+y)
+#dat <- dat %>% mutate(y = (2010-year)*0.0014+y)
 
 ## indicate if you want to include horizontal (x) and vertical (y) errors: TRUE = yes, FALSE = no
 include_errors = TRUE
@@ -22,8 +22,9 @@ include_errors = TRUE
 plot_data(dat,
           include_errors = include_errors)
 
-## specify the number of change points (1,2,3 or 4)
-num_change_points <- 0
+## specify the number of change points (0,1,2,3 or 4)
+## 0 = simple linear regression or EIV linear regression
+num_change_points <- 1
 
 ## Run the model
 RunCPModel(dat=dat,
