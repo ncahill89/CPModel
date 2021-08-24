@@ -5,11 +5,20 @@ get_diagnostics<-function(dat,
 {
 
   # load the MCMC output
+  if(n_cp == 0)
+  {
+    load(paste0("output/jags_mod",0,".Rdata"))
+    mcmc.array<-mod$BUGSoutput$sims.array
+    pars.check<-c("beta","alpha","sigma_err")
+  }
+
+
+  # load the MCMC output
   if(n_cp == 1)
   {
     load(paste0("output/jags_mod",1,".Rdata"))
     mcmc.array<-mod$BUGSoutput$sims.array
-    pars.check<-c("beta[1]","beta[2]","cp","sigma_err")
+    pars.check<-c("beta[1]","beta[2]","alpha[1]","cp","sigma_err")
   }
 
   if(n_cp == 2)

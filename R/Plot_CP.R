@@ -65,6 +65,15 @@ plot_res<-function(dat,
 {
 
   # load the MCMC output
+  if(n_cp == 0)
+  {
+
+    load(paste0("output/jags_mod",0,".Rdata"))
+    mcmc.array<-mod$BUGSoutput$sims.array
+    saveas<-"CP1_plot.pdf"
+  }
+
+  # load the MCMC output
   if(n_cp == 1)
   {
 

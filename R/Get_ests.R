@@ -2,6 +2,14 @@ get_ests<-function(dat,
                    n_cp = 1)
 {
   # load the MCMC output
+  if(n_cp == 0)
+  {
+    load(paste0("output/jags_mod",0,".Rdata"))
+    mcmc.array<-mod$BUGSoutput$sims.array
+    pars.check<-c("beta")
+  }
+
+  # load the MCMC output
   if(n_cp == 1)
   {
     load(paste0("output/jags_mod",1,".Rdata"))
@@ -31,7 +39,7 @@ get_ests<-function(dat,
   }
 
    # Get estimates and uncertainty
-    pars.summary<-internalget_ests(mcmc.array,pars.check = pars.check)
+    pars.summary<-internal_get_ests(mcmc.array,pars.check = pars.check)
 
     return(list(pars.summary=pars.summary))
   }
@@ -40,7 +48,7 @@ get_ests<-function(dat,
 
 
 
-internalget_ests<-function(mcmc.array,
+internal_get_ests<-function(mcmc.array,
                    pars.check=c("beta[1]","beta[2]","cp")){
   mean<-sd<-l95<-u95<-rep(NA,length(pars.check))
 
@@ -63,7 +71,7 @@ internalget_ests<-function(mcmc.array,
 
   ests<-t(data.frame(mean,sd,l95,u95))
   colnames(ests)<-pars.check
-
+  ests <- t(ests)
   return(ests)
 
 }

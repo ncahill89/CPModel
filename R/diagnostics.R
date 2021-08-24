@@ -92,6 +92,14 @@ PlotTrace <- function(#Traceplot for one parameter
   n_cp = 1,
   n.chains= NULL, n.sim= NULL, main = NULL){
 
+
+  # load the MCMC output
+  if(n_cp == 0)
+  {
+    load(paste0("output/jags_mod",0,".Rdata"))
+    mcmc.array<-mod$BUGSoutput$sims.array
+  }
+
   # load the MCMC output
   if(n_cp == 1)
   {

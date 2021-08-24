@@ -55,6 +55,16 @@ RunCPModel<-function(n_cp = 1,
               "sigma_err",
               "cp")
 
+  if(n_cp == 0)
+  {
+    cpmodel <- 0
+    model <- ifelse(include_errors == TRUE,"model/CP0_model_EIV.txt","model/CP0_model.txt")
+
+    myinitial<-function(){list("alpha"=runif(1,0,10),
+                               "beta"=rnorm(1,0,3),
+                               "sigma_err"=runif(1,0,1) )}
+  }
+
   if(n_cp == 1)
   {
     cpmodel <- 1
