@@ -1,0 +1,31 @@
+model
+{
+
+
+####CP Regression model
+  for(t in 1:n_years)
+  {
+  s_star[t]<-alpha + beta*year.t[t]
+  }
+
+  ###Data Loop
+  for(j in 1:n_obs)
+  {
+  y.j[j]~dnorm(alpha + beta*mu_year.j[j],tau_y[j])
+  year.j[j]~dnorm(mu_year.j[j],year_sd[j]^-2)
+
+  mu_year.j[j] ~ dnorm(0,0.0001)
+  tau_y[j] <- (y_sd[j]^2 + sigma_err^2)^-1
+  }
+
+
+  ##Priors
+  alpha ~ dnorm(0.0,0.01)
+
+  beta ~ dnorm(0.0,0.01)
+
+  sigma_err ~ dt(0,4^-2,1)T(0,)
+
+
+
+}##End model

@@ -1,0 +1,26 @@
+model
+{
+
+
+####CP Regression model
+  for(t in 1:n_years)
+  {
+  s_star[t]<-alpha + beta*year.t[t]
+  }
+
+  ###Data Loop
+  for(j in 1:n_obs)
+  {
+  y.j[j]~dnorm(s_star[matchyears[j]],sigma_err^-2)
+  }
+
+
+  ##Priors
+  alpha ~ dnorm(0.0,0.01)
+
+  beta ~ dnorm(0.0,0.01)
+ 
+  sigma_err ~ dt(0,4^-2,1)T(0,)
+
+
+}##End model
