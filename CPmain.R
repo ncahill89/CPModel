@@ -36,7 +36,7 @@ get_diagnostics(dat,
                 n_cp = num_change_points)
 
 ## If convergence is not ok check the traceplots for flagged parameters e.g.,
-PlotTrace("beta",
+PlotTrace("beta[1]",
           n_cp = num_change_points)
 
 ## If diagnostics look ok, get estimates and plot the results
@@ -47,11 +47,14 @@ get_ests(dat,
          n_cp = num_change_points)
 
 ## Plot results, choose an axis label and a title
-plot_res(dat,
+p <- plot_res(dat,
          n_cp = num_change_points,
          yaxis.lab="Temperature anomoly",
          title="")
-
+# get the plot
+p$p_res
+# get the results dataframe
+p$df.s
 
 
 
