@@ -133,5 +133,5 @@ ggsave(res, file = paste0("fig/",saveas), width = 10, height = 6)
 
 cat("Plot of estimates saved to figure folder \n")
 
-return(res)
+return(list(p_res=res, df.s = df.s))
 }
