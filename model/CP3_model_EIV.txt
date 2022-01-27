@@ -17,7 +17,7 @@ model
   ###Data Loop
   for(j in 1:n_obs)
   {
-  y.j[j] ~ dnorm(alpha[K[j]+L[j]]+beta[J[j]+K[j]+L[j]]*(mu_year.j[j]-cp[K[j]+L[j]]),sigma_err^-2)
+  y.j[j] ~ dnorm(alpha[K[j]+L[j]]+beta[J[j]+K[j]+L[j]]*(mu_year.j[j]-cp[K[j]+L[j]]),tau_y[j])
 
   J[j] <- step(mu_year.j[j]-cp[1])
   K[j]<- step(mu_year.j[j]-cp[2])
